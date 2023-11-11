@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:35:29 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/11 13:59:42 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:19:02 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_fractal	*fract;
 
-	if (argc != 3)
+	if (argc < 3)
 		return (error());
 	fract = malloc(sizeof(t_fractal));
 	if (!fract)
@@ -29,12 +29,21 @@ int	main(int argc, char **argv)
 		return (error());
 	mlx_loop_hook(fract->mlx, &draw_fractal, fract);
 	mlx_loop_hook(fract->mlx, &input_move, fract);
+	mlx_loop_hook(fract->mlx, &input_julia, fract);
+	mlx_key_hook(fract->mlx, reload, fract);
 	mlx_scroll_hook(fract->mlx, zoom, fract);
 	mlx_loop(fract->mlx);
 	mlx_terminate(fract->mlx);
 	return (0);
 }
 
-// draw_fractal into hook (maybe argv check somewhere else)
+// draw_fractal into hook (maybae argv check somewhere else)
 // zoom
 // finish everything then play with color
+
+	// mlx_key_hook(fract->mlx, &input_left, fract);
+	// mlx_key_hook(fract->mlx, &input_right, fract);
+	// mlx_key_hook(fract->mlx, &input_up, fract);
+	// mlx_key_hook(fract->mlx, &input_down, fract);
+	// mlx_key_hook(fract->mlx, &input_esc, fract);
+	// mlx_key_hook(fract->mlx, input_reload, fract);
