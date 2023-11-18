@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia.c                                            :+:      :+:    :+:   */
+/*   burningship.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 17:32:38 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/16 17:51:33 by aweizman         ###   ########.fr       */
+/*   Created: 2023/11/07 15:05:28 by aweizman          #+#    #+#             */
+/*   Updated: 2023/11/16 17:51:25 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractal.h"
 
-void	julia(t_fractal *fract)
+void	burningship(t_fractal *fract)
 {
 	fract->y = 0;
 	fract->pxsize = (fract->rmax - fract->rmin) / fract->width;
@@ -21,28 +21,29 @@ void	julia(t_fractal *fract)
 		fract->x = 0;
 		while (fract->x < fract->width)
 		{
-			calculate_julia(fract);
+			calculate_burningship(fract);
 			fract->x += 1;
 		}
 		fract->y += 1;
 	}
 }
 
-void	calculate_julia(t_fractal *fract)
+void	calculate_burningship(t_fractal *fract)
 {
 	double	t;
 	int		n;
 
-	fract->zr = fract->rmin + fract->x * fract->pxsize;
-	fract->zi = fract->imax - fract->y * fract->pxsize;
-	fract->cr = fract->julia_const[fract->julia_index][0] + fract->julia_x;
-	fract->ci = fract->julia_const[fract->julia_index][1] + fract->julia_y;
+	fract->zr = 0;
+	fract->zi = 0;
+	fract->cr = fract->rmin + fract->x * fract->pxsize;
+	fract->ci = fract->imax - fract->y * fract->pxsize;
 	n = 0;
 	while (n < fract->max_iter && ((fract->zr * fract->zr)
 			+ (fract->zi * fract->zi) < 4.))
 	{
 		t = fract->zr * fract->zr - fract->zi * fract->zi + fract->cr;
-		fract->zi = 2 * fract->zr * fract->zi + fract->ci;
+		fract->zi = 2 * fract->zr * fract->zi;
+		fract->zi = (2 * (fract->zi < 0) - 1) * fract->zi + fract->ci;
 		fract->zr = t;
 		n++;
 	}

@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:35:29 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/11 19:19:02 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:58:24 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ int	main(int argc, char **argv)
 		return (error());
 	fract = malloc(sizeof(t_fractal));
 	if (!fract)
-		return (msg("memory could not be allocated"), 0);
+		return (ft_printf("memory could not be allocated\n"), 0);
 	fract->color_request = argv[2];
 	fract->fractal_request = argv[1];
 	if (!check_conds(fract))
 		return (error());
-	if (!init(fract))
-		return (error());
+	init(fract);
 	mlx_loop_hook(fract->mlx, &draw_fractal, fract);
 	mlx_loop_hook(fract->mlx, &input_move, fract);
 	mlx_loop_hook(fract->mlx, &input_julia, fract);
+	mlx_loop_hook(fract->mlx, &util_hooks, fract);
 	mlx_key_hook(fract->mlx, reload, fract);
 	mlx_scroll_hook(fract->mlx, zoom, fract);
 	mlx_loop(fract->mlx);

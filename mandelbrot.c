@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:05:28 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/11 13:55:55 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:51:38 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	mandelbrot(t_fractal *fract)
 {
-	int		n;
-
 	fract->y = 0;
 	fract->pxsize = (fract->rmax - fract->rmin) / fract->width;
 	while (fract->y < fract->height)
@@ -49,9 +47,9 @@ void	calculate_mandelbrot(t_fractal *fract)
 		n++;
 	}
 	t = 1.0 * n / fract->max_iter;
-	fract->color = ft_pixel(10 * 255 * (1 - t) * t * t * t,
-			255 * 255 * (1 - t) * (1 - t) * t * t,
-			30 * 255 * (1 - t) * (1 - t) * (1 - t) * t, 180);
+	fract->color = ft_pixel(fract->r * 255 * (1 - t) * t * t * t,
+			fract->g * 255 * (1 - t) * (1 - t) * t * t,
+			fract->b * 255 * (1 - t) * (1 - t) * (1 - t) * t, 180);
 	if (n == fract->max_iter)
 		mlx_put_pixel(fract->img, fract->x, fract->y, ft_pixel(0, 0, 0, 255));
 	else
