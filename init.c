@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:56:19 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/18 17:30:20 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:48:20 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	init(t_fractal *fract)
 	fract->max_iter = 100;
 	fract->width = 1000;
 	fract->height = 1000;
-	fract->strs = ft_calloc(sizeof(mlx_image_t *), 6);
-	while (fract->x < 6)
+	fract->strs = ft_calloc(sizeof(mlx_image_t *), 8);
+	while (fract->x < 8)
 		fract->strs[fract->x++] = ft_calloc(sizeof(mlx_image_t), 1);
 	fract->strs[fract->x] = NULL;
 	fract->x = 0;
@@ -64,7 +64,7 @@ void	init_julia_const(t_fractal *fract)
 
 	i = 0;
 	while (i < JULIA_SETS)
-		fract->julia_const[i++] = malloc(sizeof(float) * 2);
+		fract->julia_const[i++] = malloc(sizeof(long double) * 2);
 	fract->julia_const[0][0] = 0;
 	fract->julia_const[0][1] = 0.8;
 	fract->julia_const[1][0] = 0.37;

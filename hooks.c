@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:23:43 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/18 15:44:31 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:36:20 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	util_hooks(void *param)
 	fract = param;
 	if (mlx_is_key_down(fract->mlx, MLX_KEY_R))
 	{
+		fract->max_iter = 100;
 		if (fract->fract_type == MANDELBROT)
 			init_mandelbrot(fract);
 		else if (fract->fract_type == BURNINGSHIP)
@@ -57,6 +58,10 @@ void	util_hooks(void *param)
 	}
 	if (mlx_is_key_down(fract->mlx, MLX_KEY_C))
 		random_color(fract);
+	if (mlx_is_key_down(fract->mlx, MLX_KEY_PAGE_UP))
+		fract->max_iter += 20;
+	if (mlx_is_key_down(fract->mlx, MLX_KEY_PAGE_DOWN))
+		fract->max_iter -= 20;
 }
 
 void	input_move(void *param)

@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:39:42 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/18 15:44:41 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:53:29 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,18 @@ int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 void	display_menu(t_fractal *fract)
 {
 	fract->strs[0] = mlx_put_string(fract->mlx, "Controls", 460, 355);
-	fract->strs[1] = mlx_put_string(fract->mlx, "Reset          - R", 385, 400);
-	fract->strs[2] = mlx_put_string(fract->mlx, "Color Shift    - C", 385, 430);
+	fract->strs[1] = mlx_put_string(fract->mlx,
+			"Reset / Next Julia - R", 385, 400);
+	fract->strs[2] = mlx_put_string(fract->mlx,
+			"Color Shift        - C", 385, 430);
 	fract->strs[3] = mlx_put_string(fract->mlx,
-			"Move           - Arrows", 385, 460);
+			"Move               - Arrows", 385, 460);
 	fract->strs[4] = mlx_put_string(fract->mlx,
-			"Zoom           - Scroll", 385, 490);
+			"Zoom               - Scroll", 385, 490);
 	fract->strs[5] = mlx_put_string(fract->mlx,
-			"Julia Constant - WASD", 385, 520);
+			"Julia Constant     - WASD", 385, 520);
+	fract->strs[6] = mlx_put_string(fract->mlx,
+			"Fast Julia         - Shift + WASD", 385, 550);
+	fract->strs[7] = mlx_put_string(fract->mlx,
+			"Max Iteration      - Page Up / Down", 385, 580);
 }

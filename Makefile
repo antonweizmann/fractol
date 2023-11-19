@@ -1,54 +1,72 @@
-	# **************************************************************************** #
-	#                                                                              #
-	#                                                         :::      ::::::::    #
-	#    Makefile                                           :+:      :+:    :+:    #
-	#                                                     +:+ +:+         +:+      #
-	#    By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+         #
-	#                                                 +#+#+#+#+#+   +#+            #
-	#    Created: 2023/11/08 16:57:44 by aweizman          #+#    #+#              #
-	#    Updated: 2023/11/16 15:44:10 by aweizman         ###   ########.fr        #
-	#                                                                              #
-	# **************************************************************************** #
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/11/08 16:57:44 by aweizman          #+#    #+#              #
+#    Updated: 2023/11/19 17:07:35 by aweizman         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-	NAME	= fractol
+NAME	= fractol
 
-	LIBFT	= ./includes/libft-printf
+LIBFT	= ./includes/printf
 
-	MLX_DIR	= ./includes/MLX42
+MLX_DIR	= ./includes/MLX42
 
-	CC		= cc
+CC		= cc
 
-	CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
-	HEADERS = -I./srcs/fractal.h -I$(MLX_DIR)/include -I$(LIBFT)/include/ft_printf.h
-	MLX42	= $(MLX_DIR)/build/libmlx42.a -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+HEADERS = -I./srcs/fractal.h -I$(MLX_DIR)/include -I$(LIBFT)/include/ft_printf.h
+MLX42	= $(MLX_DIR)/build/libmlx42.a -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
-	SRCS	= fractal burningship init julia main mandelbrot utils hooks
+SRCS	= fractal burningship init julia main mandelbrot utils hooks
 
-	SRC_DIR	= srcs/
+SRC_DIR	= srcs/
 
-	SRC		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRCS)))
+SRC		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRCS)))
 
-	all : $(NAME)
+all : $(MLX_DIR) $(NAME)
 
-	$(NAME): $(SRC) $(LIBFT)/libftprintf.a
-			$(CC) $(CFLAGS) -o $(NAME) $(SRC) $(MLX42) $(LIBFT)/libftprintf.a $(HEADERS)
+$(NAME): $(SRC) $(LIBFT)/libftprintf.a
+	@echo "compiling fractol..."
+	@$(CC) $(CFLAGS) -o $(NAME) $(SRC) $(MLX42) $(LIBFT)/libftprintf.a $(HEADERS)
 
-	$(LIBFT)/libftprintf.a:
-		make -C $(LIBFT)
+$(LIBFT)/libftprintf.a:
+	@make -C $(LIBFT)
 
-	clean:
-		make clean -C $(LIBFT)
+$(MLX_DIR):
+	@echo "creating MLX42.."
+	@cd includes/ && mkdir MLX42 && git clone https://github.com/codam-coding-college/MLX42.git
+	@cd includes/MLX42/ && cmake -B build && cmake --build build -j4
 
-	fclean:
-		make clean -C $(LIBFT)
-		make fclean -C $(LIBFT)
-		rm -f $(NAME)
+install_brew:
+	@echo "installing brew.." \
+	@rm -rf $HOME/.brew && rm -rf $HOME/goinfre/.brew && \
+	@git clone --depth=1 https://github.com/Homebrew/brew $HOME/goinfre/.brew && \
+	@echo 'export PATH=$HOME/goinfre/.brew/bin:$PATH' >> $HOME/.zshrc && \
+	@source $HOME/.zshrc && brew update \
 
-	re: $(SRC)
-		make clean -C $(LIBFT)
-		make fclean -C $(LIBFT)
-		rm -f $(NAME)
-		$(CC) $(CFLAGS) -o $(NAME) $(SRC) $(MLX42) $(LIBFT)/libftprintf.a $(HEADERS
+install_glfw:
+	@echo "installing glfw.."
+	@brew install glfw
 
-	.PHONY: all clean fclean re
+install: install_brew install_glfw
+
+clean:
+	@echo "cleaning up..."
+	@make clean -C $(LIBFT)
+	@rm -rf includes/MLX42
+
+fclean: clean
+	@echo "full cleaning up..."
+	@make fclean -C $(LIBFT)
+	@rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re install_brew install_glfw install
+

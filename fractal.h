@@ -6,7 +6,7 @@
 /*   By: aweizman <aweizman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:21:24 by aweizman          #+#    #+#             */
-/*   Updated: 2023/11/18 17:30:27 by aweizman         ###   ########.fr       */
+/*   Updated: 2023/11/19 17:09:03 by aweizman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 # define FRACTAL_H
 
 # include "../includes/MLX42/include/MLX42/MLX42.h"
-# include "../includes/libft-printf/include/ft_printf.h"
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
+# include "../includes/printf/include/ft_printf.h"
 
-# define ITERATIONS 50
 # define MANDELBROT 1
 # define JULIA 2
 # define BURNINGSHIP 3
-# define MANDELBOX 4
 # define JULIA_SETS 9
 
 typedef struct s_fractal
@@ -43,21 +38,21 @@ typedef struct s_fractal
 	char			*color_request;
 	char			*fractal_request;
 	int				fract_type;
-	double			rmin;
-	double			rmax;
-	double			imin;
-	double			imax;
-	double			pxsize;
-	double			zr;
-	double			zi;
-	double			cr;
-	double			ci;
-	double			julia_x;
-	double			julia_y;
-	float			**julia_const;
+	long double		rmin;
+	long double		rmax;
+	long double		imin;
+	long double		imax;
+	long double		pxsize;
+	long double		zr;
+	long double		zi;
+	long double		cr;
+	long double		ci;
+	long double		julia_x;
+	long double		julia_y;
+	long double		**julia_const;
 	int				julia_index;
 	int				julia_ind_mv;
-	double			zoom;
+	long double		zoom;
 	int				max_iter;
 	int				color;
 }				t_fractal;
